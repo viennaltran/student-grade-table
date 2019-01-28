@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <script src="script.js"></script>
+    <!-- <script src="script.js"></script> -->
     <meta name="viewport" content="initial-scale=1, user-scalable=no">
 </head>
 <body onload="getDataFromServer()">
@@ -12,11 +12,11 @@
     <div class="row page-header">
         <!-- only show this element when the isnt on mobile -->
         <h1 class="col-lg-12 hidden-xs">Traveler's Log
-            <small class="pull-right">Average Expense : <span class="avgGrade label label-default">0</span></small>
+            <!-- <small class="pull-right">Average Expense : <span class="avgGrade label label-default">0</span></small> -->
         </h1>
         <!-- only show this element when the user gets to a mobile version -->
         <h3 class="hidden-lg col-xs-12">Traveler's Log
-            <small class="pull-right">Average Expense : <span class="avgGrade label label-default">0</span></small>
+            <!-- <small class="pull-right">Average Expense : <span class="avgGrade label label-default">0</span></small> -->
         </h3>
     </div>
 
@@ -30,10 +30,9 @@
         </div>
         <div class="input-group form-group">
             <span class="input-group-addon">
-                <!-- <span class="glyphicon glyphicon-education"></span> -->
+                <!-- <span class="glyphicon glyphicon-user" ></span> -->
             </span>
-            <input type="text" class="form-control" name="date" id="date"
-                   placeholder="Date">
+            <input type="text" class="form-control" name="category" id="category" placeholder="Category">
         </div>
         <div class="input-group form-group">
             <span class="input-group-addon">
@@ -41,6 +40,13 @@
             </span>
             <input type="text" class="form-control" name="description" id="description"
                    placeholder="Description">
+        </div>
+        <div class="input-group form-group">
+            <span class="input-group-addon">
+                <!-- <span class="glyphicon glyphicon-education"></span> -->
+            </span>
+            <input type="text" class="form-control" name="date" id="date"
+                   placeholder="Date">
         </div>
         <div class="input-group form-group">
             <span class="input-group-addon">
@@ -58,9 +64,18 @@
         <table class="student-list table table-striped col-lg-12">
             <thead>
             <tr>
-                <th class="col-lg-3 col-xs-1">Place</th>
-                <th>Date</th>
-                <th>Description</th>
+                <th class="col-lg-6 col-xs-1">Place</th>
+                <th class="col-lg-6 col-xs-1">Amount Spent Total</th>
+            </tr> 
+            </thead>
+        </table>
+        <table class="student-list table table-striped col-lg-12">
+            <thead>
+            <tr>   
+                <th class="col-lg-3 col-xs-1">Category</th>
+                <th class="col-lg-3 col-xs-1">Description</th>
+                <th class="col-lg-3 col-xs-1">Amount Spent</th>
+                <th class="col-lg-3 col-xs-1">Date</th>
                 <th class="col-lg-3 col-xs-1">Update/Delete</th>
             </tr>
             </thead>
