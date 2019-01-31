@@ -5,6 +5,7 @@ require_once('mysql_connect.php');
 $query = "SELECT * FROM students";
 
 $result = mysqli_query($conn, $query);
+
 $output = [
     'success' => false,
     'errors' => [],
@@ -16,7 +17,11 @@ if(!empty($result)){
         while($row = mysqli_fetch_assoc($result)){
           $output['data'][] = $row;
         }
+    } else {
+        $output['errors'][]='No data available';
     }
+} else {
+    $output['errors'][] = mysqli_error($conn);
 }   
 
 $json_output= json_encode($output);
