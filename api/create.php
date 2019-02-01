@@ -1,6 +1,11 @@
 <?php
 
-require_once('mysql_connect.php');
+// require_once('mysql_connect.php');
+
+if(empty ($LOCAL_ACCESS)){
+    die('direct access not allowed');
+}
+
 
 $name = $_POST['name'];
 $grade = $_POST['grade'];
@@ -15,7 +20,7 @@ $query = "INSERT INTO `students` SET
         `name`='$name',
         `grade`='$grade',
         `course`='$course'";
-        
+
 $result = mysqli_query($conn,$query);
 
 if(!empty($result)){
@@ -29,7 +34,7 @@ if(!empty($result)){
     $output['errors'][]='invalid query';
 }
 
-$json_output = json_encode($output);
-print($json_output);
+// $json_output = json_encode($output);
+// print($json_output);
 
 ?>

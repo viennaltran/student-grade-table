@@ -179,13 +179,16 @@ function renderGradeAverage(totalAverage){
 
 
 function getDataFromServer(){
-var the_data={api_key:'Km6OOLjFBX'}
+var the_data={
+    api_key:'Km6OOLjFBX',
+    action: 'read'
+}
 
 $.ajax({
       data:the_data,
       dataType:'json',
       method:'post',
-      url:'api/read.php',
+      url:'api/access.php',
       success: function (response){
             console.log(response);   
             var server_array=response['data'];
@@ -203,6 +206,7 @@ $.ajax({
 function createStudentAjax(student){
       var the_data={
             api_key:'Km6OOLjFBX',
+            action: 'create',
             name: student.name,
             course: student.course,
             grade:student.grade
@@ -212,7 +216,7 @@ function createStudentAjax(student){
             data:the_data,
             dataType:'json',
             method:'post',
-            url:'api/create.php',
+            url:'api/access.php',
             success: function (response){
                   student.id = response.new_id;
                   getDataFromServer();
@@ -231,13 +235,14 @@ function deleteStudentAjax(studentID){
       console.log('studentID:',studentID);
       var the_data={
             api_key:'Km6OOLjFBX',
-            student_id:studentID
+            action:'delete',
+            id:studentID
 }
 $.ajax({
       data:the_data,
       dataType:'json',
       method:'post',
-      url:'https://s-apis.learningfuze.com/sgt/delete',
+      url:'api/access.php',
       success: function (response){
             getDataFromServer();
             console.log(response);
