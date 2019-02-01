@@ -1,6 +1,10 @@
 <?php
 
-require_once('mysql_connect.php');
+// require_once('mysql_connect.php');
+
+if(empty ($LOCAL_ACCESS)){
+    die('direct access not allowed');
+}
 
 $query = "SELECT * FROM students";
 
@@ -24,7 +28,7 @@ if(!empty($result)){
     $output['errors'][] = mysqli_error($conn);
 }   
 
-$json_output= json_encode($output);
-print($json_output);
+// $json_output= json_encode($output);
+// print($json_output);
 
 ?>
