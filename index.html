@@ -45,7 +45,7 @@
 
         <button type="button" id="addButton" class="btn btn-success">Add</button>
         <button type="button" id="cancelButton" class="btn btn-default">Cancel</button>
-        <button type="button" id="serverButton" class="btn btn-default">Get data From Server</button>
+        <!-- <button type="button" id="serverButton" class="btn btn-default">Get data From Server</button> -->
     </div>
 
     <div class="student-list-container col-lg-9">
@@ -62,6 +62,55 @@
             </tbody>
         </table>
     </div>
+    <div id="updateModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+        
+            <!-- Update Modal Content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" onclick="handleUpdateModal()">&times;</button>
+                <div class="wbhs-logo-update"></div><h4 class="update-modal-title">Update Student: <span id="update-modal-name"></span></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-user"></span>
+                        </span>
+                        <input type="text" class="form-control" name="updateName" id="updateName" placeholder="Student Name">
+                    </div>
+                        <p class="error error-updateName"></p>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-list-alt"></span>
+                        </span>
+                        <input type="text" class="form-control" name="updateCourse" id="updateCourse"
+                                placeholder="Student Course">
+                    </div>
+                        <p class="error error-updateCourse"></p>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-education"></span>
+                        </span>
+                        <input type="number" min="0" max="100" class="form-control" name="updateGrade" id="updateGrade"
+                                placeholder="Student Grade">
+                    </div>
+                        <p class="error error-updateGrade"></p>
+                </div>
+                <div class="modal-footer">
+                    <div class="text-center">
+                        <div class="col-xs-6">
+                            <button type="button" class="btn btn-warning" onclick="handleUpdateClick()">Update</button>
+                        </div>
+                        <div class="col-xs-6">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="handleCancelUpdate()">Cancel</button>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        
+        </div>
 
 </div>
 </body>
