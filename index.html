@@ -39,7 +39,7 @@
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-education"></span>
             </span>
-            <input type="text" class="form-control" name="studentGrade" id="studentGrade"
+            <input type="number" min="0" max="100" class="form-control" name="studentGrade" id="studentGrade"
                    placeholder="Student Grade">
         </div>
 
@@ -69,14 +69,14 @@
             <div class="modal-content">
                 <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" onclick="handleUpdateModal()">&times;</button>
-                <div class="wbhs-logo-update"></div><h4 class="update-modal-title">Update Student: <span id="update-modal-name"></span></h4>
+                <div class="wbhs-logo-update"></div><h4 class="update-modal-title">Current Student Name:</h4>
                 </div>
                 <div class="modal-body">
                     <div class="input-group">
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-user"></span>
                         </span>
-                        <input type="text" class="form-control" name="updateName" id="updateName" placeholder="Student Name">
+                        <input type="text" class="form-control" name="updateName" id="newStudentName" placeholder="Student Name">
                     </div>
                         <p class="error error-updateName"></p>
                     <br>
@@ -84,7 +84,7 @@
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-list-alt"></span>
                         </span>
-                        <input type="text" class="form-control" name="updateCourse" id="updateCourse"
+                        <input type="text" class="form-control" name="updateCourse" id="newCourse"
                                 placeholder="Student Course">
                     </div>
                         <p class="error error-updateCourse"></p>
@@ -93,7 +93,7 @@
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-education"></span>
                         </span>
-                        <input type="number" min="0" max="100" class="form-control" name="updateGrade" id="updateGrade"
+                        <input type="number" min="0" max="100" class="form-control" name="updateGrade" id="newGrade"
                                 placeholder="Student Grade">
                     </div>
                         <p class="error error-updateGrade"></p>
@@ -104,7 +104,7 @@
                             <button type="button" class="btn btn-warning" onclick="handleUpdateClick()">Update</button>
                         </div>
                         <div class="col-xs-6">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="handleCancelUpdate()">Cancel</button>
+                            <button type="button" class="btn btn-danger" id="cancelButton" onclick="handleCancelClick()">Cancel</button>
                         </div>
                     </div> 
                 </div>

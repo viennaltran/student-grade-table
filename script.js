@@ -5,7 +5,6 @@
 /**
  * Listen for the document to load and initialize the application
  */ 
-// create modal
 
 $(document).ready(initializeApp);
 
@@ -32,16 +31,7 @@ var student_array=[];
 */
 function initializeApp(){
       addClickHandlersToElements();
-      $('body').on('click', '#updateModal', function(event) {
-        if ($(event.target).attr('id') === 'updateModal') {
-              handleUpdateModal();
-        }
-  });
-  $('body').on('click', '#deleteModal', function(event) {
-        if ($(event.target).attr('id') === 'deleteModal') {
-              handleUpdateModal();
-        }
-  });
+
 }
 
 /***************************************************************************************************
@@ -90,7 +80,7 @@ function addStudent(){
       student.course=$("#course").val();
       student.grade=$("#studentGrade").val();
       createStudentAjax(student)
-      // student_array.push(student);
+      student_array.push(student);
 
       // updateStudentList(student_array);
       // clearAddStudentFormInputs();
@@ -104,6 +94,9 @@ function clearAddStudentFormInputs(){
       $("#studentName").val("");
       $("#course").val("");
       $("#studentGrade").val("");
+      $("#newStudentName").val("");
+      $("#newCourse").val("");
+      $("#newGrade").val("");
 
 }
 /***************************************************************************************************
@@ -123,11 +116,8 @@ function renderStudentOnDom(studentObj){
             text:"Delete",
             studentID:id,
             click:function (){
-                  console.log("id", id)
+                  console.log("delete id", id)
                   deleteStudentAjax(id);
-                  // $(newTR).remove();
-                  // var index=student_array.indexOf(studentObj);
-                  // student_array.splice(index,1);
                   
             }
             
@@ -144,15 +134,10 @@ function renderStudentOnDom(studentObj){
         studentID:id,
         'data-toggle': 'modal',
         'data-target': '#updateModal',
-        click:function (student){
-              console.log("id", id);
+        click:function (){
+              console.log("update id", id);
+              updateStudentAjax(id,name,course,grade);
               handleUpdateModal();
-              handleEditClick(student);
-
-            //   updateStudentAjax(id);
-              // $(newTR).remove();
-              // var index=student_array.indexOf(studentObj);
-              // student_array.splice(index,1);
               
         }
         
@@ -167,28 +152,20 @@ function renderStudentOnDom(studentObj){
 
 }
 
-function handleUpdateModal(){
+function handleUpdateModal(student){
     $(".container").removeClass("sgt-main-blur");
       update_student_id = null;
-      resetErrors();
-}
-
-function resetErrors(){
-    $('.error-name').text('');
-    $('.error-course').text('');
-    $('.error-grade').text('');
-    $('.error-updateName').text('');
-    $('.error-updateCourse').text('');
-    $('.error-updateGrade').text('');
-}
-
-function handleEditClick( student ){
-    // $("#updateModal").modal({backdrop: "static"});
-    $(".container").addClass("sgt-main-blur");
     $("#update-modal-name").text(`${student.name}`);
-    $('#updateName').val(student.name);
-    $('#updateCourse').val(student.course);
-    $('#updateGrade').val(student.grade);
+    $('#newStudentName').val(student.name);
+    $('#newCourse').val(student.course);
+    $('#newGrade').val(student.grade);
+      handleUpdateClick();
+      
+      
+}
+
+function handleUpdateClick(){
+    
 }
 
 /***************************************************************************************************
@@ -310,33 +287,36 @@ $.ajax({
 });
 }
 
-// function updateStudentAjax(studentID){
-//     console.log('studentID:',studentID);
-//     var the_data={
-//         action:'update',
-//         id:studentID,
-//         name: student.name,
-//         course: student.course,
-//         grade:student.grade
-// }
-// $.ajax({
-//     data:the_data,
-//     dataType:'json',
-//     method:'post',
-//     url:'api/access.php',
-//     success: function (response){
-//           getDataFromServer();
-//           console.log(response);
-//     },
-//     error: function (err) {
-//           console.log(err);
+function updateStudentAjax(studentID,name,course,grade){
+        console.log('studentID:',studentID,'name:',name,'course:',course,'grade:',grade);
+    // console.log('studentID:',id, name, course, grade);
+    var the_data={
+        action:'update',
+        id:studentID,
+        name: student.name,
+        course: student.course,
+        grade:student.grade
+        
+}
+$.ajax({
+    data:the_data,
+    dataType:'json',
+    method:'post',
+    url:'api/access.php',
+    success: function (response){
+          getDataFromServer();
+          handleUpdateClick();
+          console.log(response);
+          return(response);
+    },
+    error: function (err) {
+          console.log("error message:",err);
 
-//     }
+    }
     
-// });
-// }
+});
+}
+
 
 
   
-// server dictates/control the information
-// this is still front-end (ajax) calling backend
