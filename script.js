@@ -130,13 +130,12 @@ function renderStudentOnDom(studentObj){
     var updateButton=$("<button>",{
         class: 'btn btn-success',
         id:"updateButton",
-        text:"Update",
+        text:"Edit",
         studentID:id,
         'data-toggle': 'modal',
         'data-target': '#updateModal',
         click:function (){
               console.log("update id", id);
-              updateStudentAjax(id,name,course,grade);
               //scope: passing the same object
               handleUpdateModal(studentObj);
               
@@ -153,19 +152,16 @@ function renderStudentOnDom(studentObj){
 
 }
 
-function handleUpdateModal(student){
-    $(".container").removeClass("sgt-main-blur");
-      update_student_id = null;
-    $('#newStudentName').val(student.name);
-    $('#newCourse').val(student.course);
-    $('#newGrade').val(student.grade);
-      handleUpdateClick();
-      
+function handleUpdateModal(studentObj){
+      update_student_id = studentObj.id;
+    $('#newStudentName').val(studentObj.name);
+    $('#newCourse').val(studentObj.course);
+    $('#newGrade').val(studentObj.grade);
       
 }
 
 function handleUpdateClick(){
-    
+    updateStudentAjax();
 }
 
 /***************************************************************************************************
@@ -287,15 +283,18 @@ $.ajax({
 });
 }
 
-function updateStudentAjax(student){
-        console.log(student);
+function updateStudentAjax(){
+
+    var name = $('#newStudentName').val();
+    var grade = $('#newGrade').val();
+    var course = $('#newCourse').val();
+
     var the_data={
         action:'update',
-        id:student.id,
-        name: student.name,
-        course: student.course,
-        grade:student.grade
-        
+        id:update_student_id,
+        name: name,
+        course: course,
+        grade: grade
 }
 $.ajax({
     data:the_data,
@@ -304,7 +303,6 @@ $.ajax({
     url:'api/access.php',
     success: function (response){
           getDataFromServer();
-          handleUpdateClick();
           console.log(response);
           return(response);
     },
