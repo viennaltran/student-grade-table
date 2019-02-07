@@ -43,7 +43,8 @@ function initializeApp(){
 function addClickHandlersToElements(){
       $("#addButton").click(handleAddClicked);
       $("#cancelButton").click(handleCancelClick);
-      // $("#serverButton").click(getStudentArray);
+      $("#deleteYesButton").click(handleCancelClick);
+      
       
 }
 
@@ -66,6 +67,7 @@ function handleAddClicked(event){
 function handleCancelClick(){
     clearAddStudentFormInputs();
     $('#updateModal').modal('hide');
+    $('#deleteModal').modal('hide');
 }
 /***************************************************************************************************
  * addStudent - creates a student objects based on input fields in the form and adds the object to global student array
@@ -115,10 +117,12 @@ function renderStudentOnDom(studentObj){
             id:"deleteButton",
             text:"Delete",
             studentID:id,
+            'data-toggle': 'modal',
+            'data-target': '#deleteModal',
             click:function (){
                   console.log("delete id", id)
-                  deleteStudentAjax(id);
-                  
+                //   deleteStudentAjax(id);
+                  handleConfirmDelete(studentObj);
             }
             
 
@@ -152,12 +156,21 @@ function renderStudentOnDom(studentObj){
 
 }
 
+function handleConfirmDelete(studentObj){
+    delete_student_id= studentObj.id;
+
+}
+
+function handleConfirmDeleteClick(studentObj){
+    deleteStudentAjax(studentObj);
+}
+
+
 function handleUpdateModal(studentObj){
       update_student_id = studentObj.id;
     $('#newStudentName').val(studentObj.name);
     $('#newCourse').val(studentObj.course);
-    $('#newGrade').val(studentObj.grade);
-      
+    $('#newGrade').val(studentObj.grade);      
 }
 
 function handleUpdateClick(){
@@ -254,33 +267,30 @@ function createStudentAjax(student){
             },
             error: function (err) {
                   console.log(err);
-      
             }
       });
       } 
       
 
-function deleteStudentAjax(studentID){
-      console.log('studentID:',studentID);
-      var the_data={
-            action:'delete',
-            id:studentID
+function deleteStudentAjax(){
+    var the_data={
+        action:'delete',
+        id:delete_student_id
 }
-$.ajax({
-      data:the_data,
-      dataType:'json',
-      method:'post',
-      url:'api/access.php',
-      success: function (response){
-            getDataFromServer();
-            console.log(response);
-      },
-      error: function (err) {
-            console.log(err);
-
-      }
-      
-});
+    $.ajax({
+        data:the_data,
+        dataType:'json',
+        method:'post',
+        url:'api/access.php',
+        success: function (response){
+                getDataFromServer();
+                console.log(response);
+        },
+        error: function (err) {
+                console.log(err);
+        }
+        
+    });
 }
 
 function updateStudentAjax(){
