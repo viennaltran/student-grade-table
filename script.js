@@ -5,6 +5,7 @@
 /**
  * Listen for the document to load and initialize the application
  */ 
+
 $(document).ready(initializeApp);
 
 /**
@@ -30,6 +31,7 @@ var student_array=[];
 */
 function initializeApp(){
       addClickHandlersToElements();
+
 }
 
 /***************************************************************************************************
@@ -78,7 +80,7 @@ function addStudent(){
       student.course=$("#course").val();
       student.grade=$("#studentGrade").val();
       createStudentAjax(student)
-      // student_array.push(student);
+      student_array.push(student);
 
       // updateStudentList(student_array);
       // clearAddStudentFormInputs();
@@ -92,6 +94,9 @@ function clearAddStudentFormInputs(){
       $("#studentName").val("");
       $("#course").val("");
       $("#studentGrade").val("");
+      $("#newStudentName").val("");
+      $("#newCourse").val("");
+      $("#newGrade").val("");
 
 }
 /***************************************************************************************************
@@ -111,11 +116,8 @@ function renderStudentOnDom(studentObj){
             text:"Delete",
             studentID:id,
             click:function (){
-                  console.log("id", id)
+                  console.log("delete id", id)
                   deleteStudentAjax(id);
-                  // $(newTR).remove();
-                  // var index=student_array.indexOf(studentObj);
-                  // student_array.splice(index,1);
                   
             }
             
@@ -124,13 +126,46 @@ function renderStudentOnDom(studentObj){
       var operation=$("<td>").append(deleteButton);
       var newTR=$("<tr>").addClass("delete")
 
+
+    var updateButton=$("<button>",{
+        class: 'btn btn-success',
+        id:"updateButton",
+        text:"Update",
+        studentID:id,
+        'data-toggle': 'modal',
+        'data-target': '#updateModal',
+        click:function (){
+              console.log("update id", id);
+              updateStudentAjax(id,name,course,grade);
+              //scope: passing the same object
+              handleUpdateModal(studentObj);
+              
+        }
+        
+
+    });
+  var operation=$("<td>").append(deleteButton,updateButton);
+  var newTR=$("<tr>").addClass("delete","update");
+
       var newData=$(newTR).append(name, course, grade, operation);
       
       $("tbody").append(newData);
 
-     
-      
+}
 
+function handleUpdateModal(student){
+    $(".container").removeClass("sgt-main-blur");
+      update_student_id = null;
+    $('#newStudentName').val(student.name);
+    $('#newCourse').val(student.course);
+    $('#newGrade').val(student.grade);
+      handleUpdateClick();
+      
+      
+}
+
+function handleUpdateClick(){
+    
 }
 
 /***************************************************************************************************
@@ -180,7 +215,6 @@ function renderGradeAverage(totalAverage){
 
 function getDataFromServer(){
 var the_data={
-    api_key:'Km6OOLjFBX',
     action: 'read'
 }
 
@@ -205,7 +239,6 @@ $.ajax({
 
 function createStudentAjax(student){
       var the_data={
-            api_key:'Km6OOLjFBX',
             action: 'create',
             name: student.name,
             course: student.course,
@@ -234,7 +267,6 @@ function createStudentAjax(student){
 function deleteStudentAjax(studentID){
       console.log('studentID:',studentID);
       var the_data={
-            api_key:'Km6OOLjFBX',
             action:'delete',
             id:studentID
 }
@@ -254,6 +286,36 @@ $.ajax({
       
 });
 }
+
+function updateStudentAjax(student){
+        console.log(student);
+    var the_data={
+        action:'update',
+        id:student.id,
+        name: student.name,
+        course: student.course,
+        grade:student.grade
+        
+}
+$.ajax({
+    data:the_data,
+    dataType:'json',
+    method:'post',
+    url:'api/access.php',
+    success: function (response){
+          getDataFromServer();
+          handleUpdateClick();
+          console.log(response);
+          return(response);
+    },
+    error: function (err) {
+          console.log("error message:",err);
+
+    }
+    
+});
+}
+
+
+
   
-// server dictates/control the information
-// this is still front-end (ajax) calling backend

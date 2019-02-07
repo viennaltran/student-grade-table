@@ -19,7 +19,7 @@ if(!empty($result)){
     if(mysqli_affected_rows($conn) ===1){
         $output["success"] = true;
     }else {
-        $output["errors"] = 'Unable to delete item';
+        $output["errors"] = 'Unable to delete data';
     }
 }
 ?>
