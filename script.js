@@ -54,7 +54,7 @@ function addClickHandlersToElements(){
        none
  */
 function handleAddClicked(event){
-      addStudent();
+    addStudent();
    
 }
 /***************************************************************************************************
@@ -64,8 +64,8 @@ function handleAddClicked(event){
  * @calls: clearAddStudentFormInputs
  */
 function handleCancelClick(){
-      clearAddStudentFormInputs();
-
+    clearAddStudentFormInputs();
+    $('#updateModal').modal('hide');
 }
 /***************************************************************************************************
  * addStudent - creates a student objects based on input fields in the form and adds the object to global student array
