@@ -127,7 +127,7 @@ function renderStudentOnDom(studentObj){
       var newTR=$("<tr>").addClass("delete")
 
 
-      var updateButton=$("<button>",{
+    var updateButton=$("<button>",{
         class: 'btn btn-success',
         id:"updateButton",
         text:"Update",
@@ -137,12 +137,13 @@ function renderStudentOnDom(studentObj){
         click:function (){
               console.log("update id", id);
               updateStudentAjax(id,name,course,grade);
-              handleUpdateModal();
+              //scope: passing the same object
+              handleUpdateModal(studentObj);
               
         }
         
 
-  });
+    });
   var operation=$("<td>").append(deleteButton,updateButton);
   var newTR=$("<tr>").addClass("delete","update");
 
@@ -155,7 +156,6 @@ function renderStudentOnDom(studentObj){
 function handleUpdateModal(student){
     $(".container").removeClass("sgt-main-blur");
       update_student_id = null;
-    $("#update-modal-name").text(`${student.name}`);
     $('#newStudentName').val(student.name);
     $('#newCourse').val(student.course);
     $('#newGrade').val(student.grade);
@@ -287,12 +287,11 @@ $.ajax({
 });
 }
 
-function updateStudentAjax(studentID,name,course,grade){
-        console.log('studentID:',studentID,'name:',name,'course:',course,'grade:',grade);
-    // console.log('studentID:',id, name, course, grade);
+function updateStudentAjax(student){
+        console.log(student);
     var the_data={
         action:'update',
-        id:studentID,
+        id:student.id,
         name: student.name,
         course: student.course,
         grade:student.grade
