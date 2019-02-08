@@ -20,7 +20,7 @@
             </h3>
         </div>
 
-        <div class="student-add-form col-lg-3 pull-right form-horizontal">
+        <div class="student-add-form col-lg-3 pull-right">
             <h4>Add Student</h4>
             <div class="input-group form-group">
                 <span class="input-group-addon">
@@ -28,6 +28,12 @@
                 </span>
                 <input type="text" class="form-control" name="studentName" id="studentName" placeholder="Student Name">
             </div>
+            <div class="alert alert-warning" id="name-error" role="alert" style="padding: 5px 15px">
+                    <span class="glyphicon glyphicon-exclamation-sign"></span>
+                    Must contain at least 2 letters
+            </div>
+
+
             <div class="input-group form-group">
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-list-alt"></span>
@@ -35,6 +41,11 @@
                 <input type="text" class="form-control" name="course" id="course"
                     placeholder="Student Course">
             </div>
+            <div class="alert alert-warning" id="course-error" role="alert" style="padding: 5px 15px">
+                    <span class="glyphicon glyphicon-exclamation-sign"></span>
+                    Course name required
+            </div>
+
             <div class="input-group form-group">
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-education"></span>
@@ -42,10 +53,14 @@
                 <input type="number" min="0" max="100" class="form-control" name="studentGrade" id="studentGrade"
                     placeholder="Student Grade">
             </div>
+            <div class="alert alert-warning" id="grade-error" role="alert" style="padding: 5px 15px">
+                    <span class="glyphicon glyphicon-exclamation-sign"></span>
+                    Must be from 0-100
+            </div>
 
             <button type="button" id="addButton" class="btn btn-success">Add</button>
             <button type="button" id="cancelButton" class="btn btn-default">Cancel</button>
-            <!-- <button type="button" id="serverButton" class="btn btn-default">Get data From Server</button> -->
+        
         </div>
 
         <div class="student-list-container col-lg-9">
@@ -72,31 +87,38 @@
                     <div class="wbhs-logo-update"></div><h4 class="update-modal-title">Update Modal</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="input-group">
+                        <div class="form-group input-group">
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-user"></span>
                             </span>
                             <input type="text" class="form-control" name="updateName" id="newStudentName" placeholder="Student Name">
                         </div>
-                            <p class="error error-updateName"></p>
-                        <br>
-                        <div class="input-group">
+                        <div class="form-group alert alert-warning" id="name-modal-error" role="alert" style="padding: 5px 15px">
+                                <span class="glyphicon glyphicon-exclamation-sign"></span>
+                                Must contain at least 2 letters
+                        </div>
+                        <div class="form-group input-group">
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-list-alt"></span>
                             </span>
                             <input type="text" class="form-control" name="updateCourse" id="newCourse"
                                     placeholder="Student Course">
                         </div>
-                            <p class="error error-updateCourse"></p>
-                        <br>
-                        <div class="input-group">
+                        <div class="form-group alert alert-warning" id="course-modal-error" role="alert" style="padding: 5px 15px">
+                                <span class="glyphicon glyphicon-exclamation-sign"></span>
+                                Course name required
+                        </div>
+                        <div class="form-group input-group">
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-education"></span>
                             </span>
                             <input type="number" min="0" max="100" class="form-control" name="updateGrade" id="newGrade"
                                     placeholder="Student Grade">
                         </div>
-                            <p class="error error-updateGrade"></p>
+                        <div class="form-group alert alert-warning" id="grade-modal-error" role="alert" style="padding: 5px 15px">
+                                <span class="glyphicon glyphicon-exclamation-sign"></span>
+                                Must be from 0-100
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <div class="text-center">

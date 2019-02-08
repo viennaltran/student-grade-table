@@ -46,7 +46,7 @@ function addClickHandlersToElements(){
     $("#addButton").click(handleAddClicked);
     //47 works
     $("#cancelButton").click(handleCancelClick);
-    //104
+    //104 works
     $("#updateClick").click(function(){
         handleUpdateClick();
         handleCancelClick();
