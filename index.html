@@ -7,7 +7,7 @@
     <script src="script.js"></script>
     <meta name="viewport" content="initial-scale=1, user-scalable=no">
 </head>
-<body onload="getDataFromServer()">
+<body>
     <div class="container">
         <div class="row page-header">
             <!-- only show this element when the isnt on mobile -->
@@ -68,7 +68,7 @@
                 <!-- Update Modal Content -->
                 <div class="modal-content">
                     <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" onclick="handleUpdateModal()">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal" onclick="">&times;</button>
                     <div class="wbhs-logo-update"></div><h4 class="update-modal-title">Update Modal</h4>
                     </div>
                     <div class="modal-body">
@@ -101,10 +101,10 @@
                     <div class="modal-footer">
                         <div class="text-center">
                             <div class="col-xs-6">
-                                <button type="button" class="btn btn-warning" onclick="handleUpdateClick()">Update</button>
+                                <button type="button" id="updateClick" class="btn btn-warning" onclick="">Update</button>
                             </div>
                             <div class="col-xs-6">
-                                <button type="button" class="btn btn-danger" id="cancelButton" onclick="handleCancelClick()">Cancel</button>
+                                <button type="button" class="btn btn-danger" id="cancelModalButton" onclick="">Cancel</button>
                             </div>
                         </div> 
                     </div>
@@ -116,7 +116,7 @@
         <div id="deleteModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
             
-                <!-- Update Modal Content -->
+                <!-- Delete Modal Content -->
                 <div class="modal-content">
                     <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -128,10 +128,10 @@
                     <div class="modal-footer">
                         <div class="text-center">
                             <div class="col-xs-6">
-                                <button type="button" class="btn btn-warning" id="deleteYesButton" onclick="handleConfirmDeleteClick()">Yes</button>
+                                <button type="button" class="btn btn-warning" id="deleteYesButton" onclick="">Yes</button>
                             </div>
                             <div class="col-xs-6">
-                                <button type="button" class="btn btn-danger" id="cancelButton" onclick="handleCancelClick()">No</button>
+                                <button type="button" class="btn btn-danger" id="deleteNoButton" onclick="">No</button>
                             </div>
                         </div> 
                     </div>

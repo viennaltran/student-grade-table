@@ -31,6 +31,7 @@ var student_array=[];
 */
 function initializeApp(){
       addClickHandlersToElements();
+      getDataFromServer();
 
 }
 
@@ -41,10 +42,25 @@ function initializeApp(){
 *     
 */
 function addClickHandlersToElements(){
-      $("#addButton").click(handleAddClicked);
-      $("#cancelButton").click(handleCancelClick);
-      $("#deleteYesButton").click(handleCancelClick);
-      
+    // 46 works
+    $("#addButton").click(handleAddClicked);
+    //47 works
+    $("#cancelButton").click(handleCancelClick);
+    //104
+    $("#updateClick").click(function(){
+        handleUpdateClick();
+        handleCancelClick();
+    });
+    //107 works
+    $("#cancelModalButton").click(handleCancelClick);
+
+    //131 works
+    $("#deleteYesButton").click(function(){
+        handleCancelClick();
+        handleConfirmDeleteClick();
+    })
+    //134 works
+    $("#deleteNoButton").click(handleCancelClick);
       
 }
 
