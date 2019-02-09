@@ -32,6 +32,7 @@ var student_array=[];
 function initializeApp(){
       addClickHandlersToElements();
       getDataFromServer();
+      // addStudent();
 
 }
 
@@ -42,25 +43,29 @@ function initializeApp(){
 *     
 */
 function addClickHandlersToElements(){
-    // 46 works
-    $("#addButton").click(handleAddClicked);
-    //47 works
-    $("#cancelButton").click(handleCancelClick);
-    //104 works
-    $("#updateClick").click(function(){
-        handleUpdateClick();
-        handleCancelClick();
-    });
-    //107 works
-    $("#cancelModalButton").click(handleCancelClick);
 
-    //131 works
+    $("#addButton").click(handleAddClicked);
+    $("#cancelButton").click(handleCancelClick);
+    $("#updateClick").click(function(){
+      addInputValidationOnModal();
+      // handleCancelClick();
+    });
+    $("#cancelModalButton").click(handleCancelClick);
     $("#deleteYesButton").click(function(){
         handleCancelClick();
         handleConfirmDeleteClick();
     })
-    //134 works
     $("#deleteNoButton").click(handleCancelClick);
+
+    $("input").on('click', function() {
+      console.log("deleting warning message");
+      $('#name-error').addClass('hide'); 
+      $('#course-error').addClass('hide');
+      $('#grade-error').addClass('hide');
+      $('#name-modal-error').addClass('hide'); 
+      $('#course-modal-error').addClass('hide');
+      $('#grade-modal-error').addClass('hide');
+    });
       
 }
 
@@ -81,9 +86,14 @@ function handleAddClicked(event){
  * @calls: clearAddStudentFormInputs
  */
 function handleCancelClick(){
-    clearAddStudentFormInputs();
-    $('#updateModal').modal('hide');
-    $('#deleteModal').modal('hide');
+      clearAddStudentFormInputs();
+
+      $('#name-error').addClass('hide');
+      $('#course-error').addClass('hide');
+      $('#grade-error').addClass('hide');
+
+      $('#updateModal').modal('hide');
+      $('#deleteModal').modal('hide');
 }
 /***************************************************************************************************
  * addStudent - creates a student objects based on input fields in the form and adds the object to global student array
@@ -95,13 +105,11 @@ function addStudent(){
 
       student={};
       student.name=$("#studentName").val();
-      student.course=$("#course").val();
+      student.course=$("#studentCourse").val();
       student.grade=$("#studentGrade").val();
-      createStudentAjax(student)
       student_array.push(student);
 
-      // updateStudentList(student_array);
-      // clearAddStudentFormInputs();
+      addInputValidation(student);
       
 }
 /***************************************************************************************************
@@ -110,7 +118,7 @@ function addStudent(){
 function clearAddStudentFormInputs(){
      
       $("#studentName").val("");
-      $("#course").val("");
+      $("#studentCourse").val("");
       $("#studentGrade").val("");
       $("#newStudentName").val("");
       $("#newCourse").val("");
@@ -189,10 +197,6 @@ function handleUpdateModal(studentObj){
     $('#newGrade').val(studentObj.grade);      
 }
 
-function handleUpdateClick(){
-    updateStudentAjax();
-}
-
 /***************************************************************************************************
  * updateStudentList - centralized function to update the average and call student list update
  * @param students {array} the array of student objects
@@ -236,6 +240,94 @@ function calculateGradeAverage(studentArray){
 function renderGradeAverage(totalAverage){
       $(".avgGrade").text(totalAverage);
 }
+
+//Regex Test to check the inputs
+
+function addInputValidation(){
+      
+      var nameRegex = new RegExp("^[A-Za-z _]*[A-Za-z][A-Za-z _]$"); 
+      var courseRegex = new RegExp("^[A-Za-z0-9_.-&()]+{2,10}$");
+      var gradeRegex = new RegExp("^[0-9][0-9]?$|^100$");
+
+      var nameInput = $("#studentName").val();
+      var courseInput =$("#studentCourse").val();
+      var gradeInput = $("#studentGrade").val();
+      var inputField = nameInput,courseInput,gradeInput;
+
+      if(inputField.length>0 && nameRegex.test(nameInput) && courseRegex.test(courseInput) && gradeRegex.test(gradeInput)){
+
+            console.log("going to update this");
+            createStudentAjax(student);
+                  
+      }else if(inputField.length>0){
+
+            console.log("something is missing");
+            if (!nameRegex.test(nameInput)){
+                  $('#name-error').removeClass('hide');
+            }else{
+                  $('#name-error').addClass('hide');     
+            }
+            if(!courseRegex.test(courseInput)){
+                  $('#course-error').removeClass('hide');
+            }else{
+                  $('#course-error').addClass('hide');    
+            } 
+            if(!gradeRegex.test(gradeInput)){
+                  $('#grade-error').removeClass('hide');
+            }else{
+                  $('#grade-error').addClass('hide');
+            }
+      }else{
+            console.log("fill in the information");
+            $('#name-error').removeClass('hide');
+            $('#course-error').removeClass('hide');
+            $('#grade-error').removeClass('hide');
+            
+      }
+      
+}
+
+function addInputValidationOnModal(){
+
+      var nameRegex = new RegExp("^[A-Za-z _]*[A-Za-z][A-Za-z _]{2,25}$"); 
+      var courseRegex = new RegExp("^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]{2,100}$")
+      var gradeRegex = new RegExp("^[0-9][0-9]?$|^100$");
+
+      var modalNameInput = $("#newStudentName").val();
+      var modalCourseInput=$("#newCourse").val();
+      var modalGradeInput = $("#newGrade").val();
+      var modalInputField = modalNameInput,modalCourseInput,modalGradeInput;
+
+      if(modalInputField.length>0 && nameRegex.test(modalNameInput) && courseRegex.test(modalCourseInput) && gradeRegex.test(modalGradeInput)){
+
+            console.log("going to update this");
+            updateStudentAjax();
+            $('#updateModal').modal('hide');
+                  
+      }else if(modalInputField.length>0){
+
+            console.log("something is missing");
+            if (!nameRegex.test(modalNameInput)){
+                  $('#name-modal-error').removeClass('hide');
+            }
+            if(!courseRegex.test(modalCourseInput)){
+                  $('#course-modal-error').removeClass('hide');
+            }
+            if(!gradeRegex.test(modalGradeInput)){
+                  $('#grade-modal-error').removeClass('hide');
+            }
+
+      }else{
+            console.log("fill in the information");
+            $('#name-modal-error').removeClass('hide');
+            $('#course-modal-error').removeClass('hide');
+            $('#grade-modal-error').removeClass('hide');
+            
+      }
+      
+}
+
+
 
 
 function getDataFromServer(){
