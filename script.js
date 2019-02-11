@@ -32,7 +32,7 @@ var student_array=[];
 function initializeApp(){
       addClickHandlersToElements();
       getDataFromServer();
-      // addStudent();
+      
 
 }
 
@@ -58,7 +58,6 @@ function addClickHandlersToElements(){
     $("#deleteNoButton").click(handleCancelClick);
 
     $("input").on('click', function() {
-      console.log("deleting warning message");
       $('#name-error').addClass('hide'); 
       $('#course-error').addClass('hide');
       $('#grade-error').addClass('hide');
@@ -66,7 +65,8 @@ function addClickHandlersToElements(){
       $('#course-modal-error').addClass('hide');
       $('#grade-modal-error').addClass('hide');
     });
-      
+
+//     $("body").click(removeErrorMessages);
 }
 
 /***************************************************************************************************
@@ -91,6 +91,11 @@ function handleCancelClick(){
       $('#name-error').addClass('hide');
       $('#course-error').addClass('hide');
       $('#grade-error').addClass('hide');
+
+      $('#name-modal-error').addClass('hide'); 
+      $('#course-modal-error').addClass('hide');
+      $('#grade-modal-error').addClass('hide');
+        
 
       $('#updateModal').modal('hide');
       $('#deleteModal').modal('hide');
@@ -197,6 +202,14 @@ function handleUpdateModal(studentObj){
     $('#newGrade').val(studentObj.grade);      
 }
 
+function removeErrorMessages(){
+       $('#name-error').addClass('hide'); 
+      $('#course-error').addClass('hide');
+      $('#grade-error').addClass('hide');
+      $('#name-modal-error').addClass('hide'); 
+      $('#course-modal-error').addClass('hide');
+      $('#grade-modal-error').addClass('hide');
+}
 /***************************************************************************************************
  * updateStudentList - centralized function to update the average and call student list update
  * @param students {array} the array of student objects
@@ -245,8 +258,8 @@ function renderGradeAverage(totalAverage){
 
 function addInputValidation(){
       
-      var nameRegex = new RegExp("^[A-Za-z _]*[A-Za-z][A-Za-z _]$"); 
-      var courseRegex = new RegExp("^[A-Za-z0-9_.-&()]+{2,10}$");
+      var nameRegex = new RegExp("^[A-Za-z _-]{2,25}$"); 
+      var courseRegex = new RegExp("^[A-Za-z0-9 _-]{2,100}$");
       var gradeRegex = new RegExp("^[0-9][0-9]?$|^100$");
 
       var nameInput = $("#studentName").val();
@@ -255,15 +268,13 @@ function addInputValidation(){
       var inputField = nameInput,courseInput,gradeInput;
 
       if(inputField.length>0 && nameRegex.test(nameInput) && courseRegex.test(courseInput) && gradeRegex.test(gradeInput)){
-
-            console.log("going to update this");
             createStudentAjax(student);
                   
-      }else if(inputField.length>0){
+      }else if(inputField.length>=0){
 
-            console.log("something is missing");
             if (!nameRegex.test(nameInput)){
                   $('#name-error').removeClass('hide');
+                  
             }else{
                   $('#name-error').addClass('hide');     
             }
@@ -277,7 +288,7 @@ function addInputValidation(){
             }else{
                   $('#grade-error').addClass('hide');
             }
-      }else{
+      }else {
             console.log("fill in the information");
             $('#name-error').removeClass('hide');
             $('#course-error').removeClass('hide');
@@ -289,8 +300,8 @@ function addInputValidation(){
 
 function addInputValidationOnModal(){
 
-      var nameRegex = new RegExp("^[A-Za-z _]*[A-Za-z][A-Za-z _]{2,25}$"); 
-      var courseRegex = new RegExp("^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]{2,100}$")
+      var nameRegex = new RegExp("^[A-Za-z _-]{2,25}$"); 
+      var courseRegex = new RegExp("^[A-Za-z0-9 _-]{2,100}$")
       var gradeRegex = new RegExp("^[0-9][0-9]?$|^100$");
 
       var modalNameInput = $("#newStudentName").val();
@@ -304,7 +315,7 @@ function addInputValidationOnModal(){
             updateStudentAjax();
             $('#updateModal').modal('hide');
                   
-      }else if(modalInputField.length>0){
+      }else if(modalInputField.length>=0){
 
             console.log("something is missing");
             if (!nameRegex.test(modalNameInput)){
