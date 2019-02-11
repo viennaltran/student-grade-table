@@ -31,9 +31,10 @@ var student_array=[];
 */
 function initializeApp(){
       addClickHandlersToElements();
-      getDataFromServer();
-      
-
+      getDataFromServer();  
+      $('#updateModal').on('hide.bs.modal', function (e) {
+            removeErrorMessages();
+          });  
 }
 
 /***************************************************************************************************
@@ -64,8 +65,6 @@ function addClickHandlersToElements(){
       $('#course-modal-error').addClass('hide');
       $('#grade-modal-error').addClass('hide');
     });
-
-//     $("body").click(removeErrorMessages);
 }
 
 /***************************************************************************************************
@@ -166,8 +165,6 @@ function renderStudentOnDom(studentObj){
         click:function (){
               handleUpdateModal(studentObj);
         }
-        
-
     });
   var operation=$("<td>").append(deleteButton,updateButton);
   var newTR=$("<tr>").addClass("delete","update");
@@ -269,19 +266,12 @@ function addInputValidation(){
 
             if (!nameRegex.test(nameInput)){
                   $('#name-error').removeClass('hide');
-                  
-            }else{
-                  $('#name-error').addClass('hide');     
             }
             if(!courseRegex.test(courseInput)){
                   $('#course-error').removeClass('hide');
-            }else{
-                  $('#course-error').addClass('hide');    
-            } 
+            }
             if(!gradeRegex.test(gradeInput)){
                   $('#grade-error').removeClass('hide');
-            }else{
-                  $('#grade-error').addClass('hide');
             }
       }else {
             $('#name-error').removeClass('hide');
@@ -309,10 +299,11 @@ function addInputValidationOnModal(){
                   
       }else if(modalInputField.length>=0){
             if (!nameRegex.test(modalNameInput)){
-                  $('#name-modal-error').removeClass('hide');
+                  $('#name-modal-error').removeClass('hide'); 
             }
             if(!courseRegex.test(modalCourseInput)){
                   $('#course-modal-error').removeClass('hide');
+                  
             }
             if(!gradeRegex.test(modalGradeInput)){
                   $('#grade-modal-error').removeClass('hide');
@@ -324,8 +315,6 @@ function addInputValidationOnModal(){
             $('#grade-modal-error').removeClass('hide');
       }
 }
-
-
 
 
 function getDataFromServer(){
