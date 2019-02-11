@@ -35,6 +35,9 @@ function initializeApp(){
       $('#updateModal').on('hide.bs.modal', function (e) {
             removeErrorMessages();
           });  
+      $('#deleteModal').on('hide.bs.modal', function (e) {
+            clearDeleteData();
+          });  
 }
 
 /***************************************************************************************************
@@ -128,6 +131,12 @@ function clearAddStudentFormInputs(){
       $("#newGrade").val("");
 
 }
+
+function clearDeleteData(){
+      $('#deleteName').html("");
+      $('#deleteCourse').html("");
+      $('#deleteGrade').append("");
+}
 /***************************************************************************************************
  * renderStudentOnDom - take in a student object, create html elements from the values and then append the elements
  * into the .student_list tbody
@@ -179,7 +188,8 @@ function handleConfirmDelete(studentObj){
     delete_student_id= studentObj.id;
     $('#deleteName').append(studentObj.name);
     $('#deleteCourse').append(studentObj.course);
-    $('#deleteGrade').append(studentObj.grade); 
+    $('#deleteGrade').append(studentObj.grade);
+     
 
 }
 
@@ -251,7 +261,7 @@ function renderGradeAverage(totalAverage){
 function addInputValidation(){
       
       var nameRegex = new RegExp("^[A-Za-z _-]{2,25}$"); 
-      var courseRegex = new RegExp("^[A-Za-z0-9 _-]{2,100}$");
+      var courseRegex = new RegExp("^[a-zA-Z0-9 !@#$%^&*)(]{2,100}$");
       var gradeRegex = new RegExp("^[0-9][0-9]?$|^100$");
 
       var nameInput = $("#studentName").val();
