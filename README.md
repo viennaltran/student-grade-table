@@ -1,6 +1,6 @@
-Traveler's Log
+Student Grade Table
 
-Traveler's Log is a Content Management System (CMS) web application where you can add, edit, and delete expenses, and view your expenses for the current month.
+Student Grade Table is a Content Management System (CMS) web application where a user can add, edit, and delete student's information including, student name, course and grade. A user can also view all of students' data and average grade. 
 
-Technologies used include HTML5, CSS3, JavaScript, jQuery, and Bootstrap.
+Technologies used include HTML5, CSS3, JavaScript, jQuery, and Bootstrap3.
 
