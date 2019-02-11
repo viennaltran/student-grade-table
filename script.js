@@ -48,7 +48,6 @@ function addClickHandlersToElements(){
     $("#cancelButton").click(handleCancelClick);
     $("#updateClick").click(function(){
       addInputValidationOnModal();
-      // handleCancelClick();
     });
     $("#cancelModalButton").click(handleCancelClick);
     $("#deleteYesButton").click(function(){
@@ -140,7 +139,6 @@ function renderStudentOnDom(studentObj){
       var course=$("<td>").text(studentObj.course);
       var grade=$("<td>").text(studentObj.grade);
       var id=studentObj.id;
-      console.log("id", id)
       var deleteButton=$("<button>",{
             class: 'btn btn-danger',
             id:"deleteButton",
@@ -149,8 +147,6 @@ function renderStudentOnDom(studentObj){
             'data-toggle': 'modal',
             'data-target': '#deleteModal',
             click:function (){
-                  console.log("delete id", id)
-                //   deleteStudentAjax(id);
                   handleConfirmDelete(studentObj);
             }
             
@@ -168,10 +164,7 @@ function renderStudentOnDom(studentObj){
         'data-toggle': 'modal',
         'data-target': '#updateModal',
         click:function (){
-              console.log("update id", id);
-              //scope: passing the same object
               handleUpdateModal(studentObj);
-              
         }
         
 
@@ -187,6 +180,9 @@ function renderStudentOnDom(studentObj){
 
 function handleConfirmDelete(studentObj){
     delete_student_id= studentObj.id;
+    $('#deleteName').append(studentObj.name);
+    $('#deleteCourse').append(studentObj.course);
+    $('#deleteGrade').append(studentObj.grade); 
 
 }
 
@@ -220,7 +216,6 @@ function updateStudentList(studentArray){
 
       $("tbody").text(" ");
       for (var i = 0; i < studentArray.length; i++) {
-            console.log(studentArray[i]);
             var student = studentArray[i];
             renderStudentOnDom(student);
         }
@@ -289,7 +284,6 @@ function addInputValidation(){
                   $('#grade-error').addClass('hide');
             }
       }else {
-            console.log("fill in the information");
             $('#name-error').removeClass('hide');
             $('#course-error').removeClass('hide');
             $('#grade-error').removeClass('hide');
@@ -310,14 +304,10 @@ function addInputValidationOnModal(){
       var modalInputField = modalNameInput,modalCourseInput,modalGradeInput;
 
       if(modalInputField.length>0 && nameRegex.test(modalNameInput) && courseRegex.test(modalCourseInput) && gradeRegex.test(modalGradeInput)){
-
-            console.log("going to update this");
             updateStudentAjax();
             $('#updateModal').modal('hide');
                   
       }else if(modalInputField.length>=0){
-
-            console.log("something is missing");
             if (!nameRegex.test(modalNameInput)){
                   $('#name-modal-error').removeClass('hide');
             }
@@ -329,13 +319,10 @@ function addInputValidationOnModal(){
             }
 
       }else{
-            console.log("fill in the information");
             $('#name-modal-error').removeClass('hide');
             $('#course-modal-error').removeClass('hide');
             $('#grade-modal-error').removeClass('hide');
-            
       }
-      
 }
 
 
