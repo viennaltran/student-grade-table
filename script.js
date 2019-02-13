@@ -31,13 +31,15 @@ var student_array=[];
 */
 function initializeApp(){
       addClickHandlersToElements();
-      getDataFromServer();  
+      getDataFromServer(); 
+      
       $('#updateModal').on('hide.bs.modal', function (e) {
             removeErrorMessages();
           });  
       $('#deleteModal').on('hide.bs.modal', function (e) {
             clearDeleteData();
           });  
+      
 }
 
 /***************************************************************************************************
@@ -147,6 +149,11 @@ function renderStudentOnDom(studentObj){
       var course=$("<td>").text(studentObj.course);
       var grade=$("<td>").text(studentObj.grade);
       var id=studentObj.id;
+      var deleteLoader= $("<img>",{
+            src:"/student-grade-table/image/loading.gif",
+            class:"delete-loader" + `${id}`,
+            style:"display:none"
+            });
       var deleteButton=$("<button>",{
             class: 'btn btn-danger',
             id:"deleteButton",
@@ -160,23 +167,30 @@ function renderStudentOnDom(studentObj){
             
 
       });
+      deleteButton.prepend(deleteLoader);
       var operation=$("<td>").append(deleteButton);
       var newTR=$("<tr>").addClass("delete")
 
-
-    var updateButton=$("<button>",{
-        class: 'btn btn-success',
-        id:"updateButton",
-        text:"Edit",
-        studentID:id,
-        'data-toggle': 'modal',
-        'data-target': '#updateModal',
-        click:function (){
-              handleUpdateModal(studentObj);
+      var updateLoader= $("<img>",{
+            src:"/student-grade-table/image/loading.gif",
+            class:"update-loader" + `${id}`,
+            style:"display:none"
+            });
+      var updateButton=$("<button>",{
+            class: 'btn btn-success',
+            id:"updateButton",
+            text:"Edit",
+            studentID:id,
+            'data-toggle': 'modal',
+            'data-target': '#updateModal',
+            click:function (){
+                  handleUpdateModal(studentObj);
         }
     });
-  var operation=$("<td>").append(deleteButton,updateButton);
-  var newTR=$("<tr>").addClass("delete","update");
+
+      updateButton.prepend(updateLoader)
+      var operation=$("<td>").append(deleteButton,updateButton);
+      var newTR=$("<tr>").addClass("delete","update");
 
       var newData=$(newTR).append(name, course, grade, operation);
       
@@ -358,7 +372,7 @@ function createStudentAjax(student){
             course: student.course,
             grade:student.grade
 }
-      
+      $('#add-loader').show();
       $.ajax({
             data:the_data,
             dataType:'json',
@@ -368,13 +382,15 @@ function createStudentAjax(student){
                   student.id = response.new_id;
                   getDataFromServer();
                   clearAddStudentFormInputs();
+                  $('#add-loader').hide();
                   console.log(response);
             },
             error: function (err) {
+                  $('#add-loader').hide();
                   console.log(err);
             }
-      });
-      } 
+      });     
+} 
       
 
 function deleteStudentAjax(){
@@ -382,19 +398,21 @@ function deleteStudentAjax(){
         action:'delete',
         id:delete_student_id
 }
-    $.ajax({
-        data:the_data,
-        dataType:'json',
-        method:'post',
-        url:'api/access.php',
-        success: function (response){
-                getDataFromServer();
-                console.log(response);
-        },
+      $('.delete-loader'+ `${the_data.id}`).show();
+      $.ajax({
+            data:the_data,
+            dataType:'json',
+            method:'post',
+            url:'api/access.php',
+            success: function (response){
+                  getDataFromServer();
+                  $('.delete-loader' + `${the_data.id}`).hide();
+                  console.log(response);
+            },
         error: function (err) {
-                console.log(err);
+            $('.delete-loader' + `${the_data.id}`).hide();
+            console.log(err);
         }
-        
     });
 }
 
@@ -411,6 +429,7 @@ function updateStudentAjax(){
         course: course,
         grade: grade
 }
+$('.update-loader'+ `${the_data.id}`).show();
 $.ajax({
     data:the_data,
     dataType:'json',
@@ -418,10 +437,12 @@ $.ajax({
     url:'api/access.php',
     success: function (response){
           getDataFromServer();
+          $('.update-loader'+ `${the_data.id}`).hide();
           console.log(response);
           return(response);
     },
     error: function (err) {
+      $('.update-loader'+ `${the_data.id}`).hide();
           console.log("error message:",err);
 
     }
