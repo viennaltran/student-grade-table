@@ -7,9 +7,13 @@ $output = [
     'errors' => [],
 ];
 
-$query = "TRUNCATE TABLE `students`";
+$query = "DELETE FROM `students` WHERE 1";
 
 mysqli_query($conn, $query);
+
+if (mysqli_errno($conn)){
+    print mysqli_error($conn);
+}
 
 $query = "INSERT INTO `students` (`id`,`name`,`course`,`grade`) VALUES 
 (1,'Emma Smith','Calculus 2',87),
@@ -24,5 +28,9 @@ $query = "INSERT INTO `students` (`id`,`name`,`course`,`grade`) VALUES
 (10,'Lily Park','English', 57);";
 
 mysqli_query($conn,$query);
+
+if (mysqli_errno($conn)){
+    print mysqli_error($conn);
+}
 
 ?>
