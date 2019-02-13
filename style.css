@@ -1,3 +1,19 @@
 .btn-success {
     margin: 7px;
 }
+
+#addButton, #deleteButton, #updateButton{
+    width:35%;
+}
+
+#add-loader{
+    width:30%;    
+}
+
+ #deleteButton, #updateButton{
+    width:45%;
+}
+
+img{
+    width:40%;    
+}
