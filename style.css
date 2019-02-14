@@ -17,3 +17,12 @@
 img{
     width:40%;    
 }
+
+@media only screen and (max-width: 1199px) {
+    #deleteButton, #updateButton{
+        width:100%;
+    }
+    #updateButton{
+        margin-left:0px;
+    }
+}

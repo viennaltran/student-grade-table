@@ -275,7 +275,7 @@ function renderGradeAverage(totalAverage){
 function addInputValidation(){
       
       var nameRegex = new RegExp("^[A-Za-z _-]{2,25}$"); 
-      var courseRegex = new RegExp("^[a-zA-Z0-9 !@#$%^&*)(]{2,100}$");
+      var courseRegex = new RegExp("[A-Za-z0-9!@#$%^&*)(]{2,20}");
       var gradeRegex = new RegExp("^[0-9][0-9]?$|^100$");
 
       var nameInput = $("#studentName").val();
@@ -283,15 +283,15 @@ function addInputValidation(){
       var gradeInput = $("#studentGrade").val();
       var inputField = nameInput,courseInput,gradeInput;
 
-      if(inputField.length>0 && nameRegex.test(nameInput) && courseRegex.test(courseInput) && gradeRegex.test(gradeInput)){
+      if(inputField.length>0 && nameRegex.test(nameInput) && courseRegex.test(courseInput) && inputField.length<4 && gradeRegex.test(gradeInput)){
             createStudentAjax(student);
                   
       }else if(inputField.length>=0){
 
-            if (!nameRegex.test(nameInput)){
+            if (!nameRegex.test(nameInput) || inputField.length>25){
                   $('#name-error').removeClass('hide');
             }
-            if(!courseRegex.test(courseInput)){
+            if(!courseRegex.test(courseInput) || inputField.length>40){
                   $('#course-error').removeClass('hide');
             }
             if(!gradeRegex.test(gradeInput)){
