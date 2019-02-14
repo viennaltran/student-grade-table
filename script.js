@@ -291,7 +291,7 @@ function addInputValidation(){
             if (!nameRegex.test(nameInput) || inputField.length>25){
                   $('#name-error').removeClass('hide');
             }
-            if(!courseRegex.test(courseInput) || inputField.length>40){
+            if(!courseRegex.test(courseInput) || inputField.length>30){
                   $('#course-error').removeClass('hide');
             }
             if(!gradeRegex.test(gradeInput)){
