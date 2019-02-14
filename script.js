@@ -137,7 +137,7 @@ function clearAddStudentFormInputs(){
 function clearDeleteData(){
       $('#deleteName').html("");
       $('#deleteCourse').html("");
-      $('#deleteGrade').append("");
+      $('#deleteGrade').html("");
 }
 /***************************************************************************************************
  * renderStudentOnDom - take in a student object, create html elements from the values and then append the elements
@@ -274,70 +274,66 @@ function renderGradeAverage(totalAverage){
 
 function addInputValidation(){
       
-      var nameRegex = new RegExp("^[A-Za-z _-]{2,25}$"); 
-      var courseRegex = new RegExp("[A-Za-z0-9!@#$%^&*)(]{2,20}");
+      var nameRegex = new RegExp("^[A-Za-z  _-]{2,100}$"); 
+      var courseRegex = new RegExp("{2,100}");
       var gradeRegex = new RegExp("^[0-9][0-9]?$|^100$");
 
       var nameInput = $("#studentName").val();
       var courseInput =$("#studentCourse").val();
       var gradeInput = $("#studentGrade").val();
-      var inputField = nameInput,courseInput,gradeInput;
 
-      if(inputField.length>0 && nameRegex.test(nameInput) && courseRegex.test(courseInput) && inputField.length<4 && gradeRegex.test(gradeInput)){
-            createStudentAjax(student);
-                  
-      }else if(inputField.length>=0){
+      if(nameInput.length>=0 || courseInput.length>=0 || gradeInput.length>=0){
 
-            if (!nameRegex.test(nameInput) || inputField.length>25){
+            if (!nameRegex.test(nameInput) || nameInput.replace(/\s/g, "").length>25){
                   $('#name-error').removeClass('hide');
             }
-            if(!courseRegex.test(courseInput) || inputField.length>30){
+            if(!courseRegex.test(courseInput) || courseInput.replace(/\s/g, "").length>40){
                   $('#course-error').removeClass('hide');
             }
             if(!gradeRegex.test(gradeInput)){
                   $('#grade-error').removeClass('hide');
             }
+            if(nameRegex.test(nameInput) && courseRegex.test(courseInput) && gradeRegex.test(gradeInput)) {
+                  createStudentAjax(student);
+            }
       }else {
             $('#name-error').removeClass('hide');
             $('#course-error').removeClass('hide');
             $('#grade-error').removeClass('hide');
-            
-      }
-      
+      }   
 }
 
 function addInputValidationOnModal(){
 
-      var nameRegex = new RegExp("^[A-Za-z _-]{2,25}$"); 
-      var courseRegex = new RegExp("^[A-Za-z0-9 _-]{2,100}$")
+      var nameRegex = new RegExp("^[A-Za-z  _-]{2,100}$"); 
+      var courseRegex = new RegExp("{2,100}");
       var gradeRegex = new RegExp("^[0-9][0-9]?$|^100$");
 
       var modalNameInput = $("#newStudentName").val();
-      var modalCourseInput=$("#newCourse").val();
+      var modalCourseInput =$("#newCourse").val();
       var modalGradeInput = $("#newGrade").val();
-      var modalInputField = modalNameInput,modalCourseInput,modalGradeInput;
 
-      if(modalInputField.length>0 && nameRegex.test(modalNameInput) && courseRegex.test(modalCourseInput) && gradeRegex.test(modalGradeInput)){
-            updateStudentAjax();
-            $('#updateModal').modal('hide');
-                  
-      }else if(modalInputField.length>=0){
-            if (!nameRegex.test(modalNameInput)){
-                  $('#name-modal-error').removeClass('hide'); 
+      if(modalNameInput.length>=0 || modalCourseInput.length>=0 || modalGradeInput.length>=0){
+
+            if (!nameRegex.test(modalNameInput) || modalNameInput.replace(/\s/g, "").length>25){
+                  $('#name-modal-error').removeClass('hide');
             }
-            if(!courseRegex.test(modalCourseInput)){
+            if(!courseRegex.test(modalCourseInput) || modalCourseInput.replace(/\s/g, "").length>40){
                   $('#course-modal-error').removeClass('hide');
-                  
             }
             if(!gradeRegex.test(modalGradeInput)){
                   $('#grade-modal-error').removeClass('hide');
             }
-
-      }else{
+            if(nameRegex.test(modalNameInput) && courseRegex.test(modalCourseInput) && gradeRegex.test(modalGradeInput)) {
+                  updateStudentAjax();
+                  $('#updateModal').modal('hide');
+            }
+      }else {
             $('#name-modal-error').removeClass('hide');
             $('#course-modal-error').removeClass('hide');
             $('#grade-modal-error').removeClass('hide');
-      }
+            
+      }   
 }
 
 
