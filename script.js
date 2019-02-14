@@ -275,7 +275,7 @@ function renderGradeAverage(totalAverage){
 function addInputValidation(){
       
       var nameRegex = new RegExp("^[A-Za-z  _-]{2,100}$"); 
-      var courseRegex = new RegExp("{2,100}");
+      var courseRegex = new RegExp("[A-Za-z0-9!@#$%^&*)(]{2,100}");
       var gradeRegex = new RegExp("^[0-9][0-9]?$|^100$");
 
       var nameInput = $("#studentName").val();
@@ -306,7 +306,7 @@ function addInputValidation(){
 function addInputValidationOnModal(){
 
       var nameRegex = new RegExp("^[A-Za-z  _-]{2,100}$"); 
-      var courseRegex = new RegExp("{2,100}");
+      var courseRegex = new RegExp("[A-Za-z0-9!@#$%^&*)(]{2,100}");
       var gradeRegex = new RegExp("^[0-9][0-9]?$|^100$");
 
       var modalNameInput = $("#newStudentName").val();
