@@ -22,5 +22,4 @@ if ($result){
     $output['message'] = 'Error updating student info';
 }
 
-
 ?>

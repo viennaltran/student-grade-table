@@ -7,7 +7,7 @@ $output = [
     'success' => false,
     'errors' => [],
 ];
-//post must match with what was said on script not mysqul table
+
 $id = $_POST['id'];
 
 $query = "DELETE FROM `students` WHERE `id` = '$id' ";
