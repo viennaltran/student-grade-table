@@ -1,11 +1,8 @@
 <?php
 
-// require_once('mysql_connect.php');
-
 if(empty ($LOCAL_ACCESS)){
     die('direct access not allowed');
 }
-
 
 $name = $_POST['name'];
 $grade = $_POST['grade'];
